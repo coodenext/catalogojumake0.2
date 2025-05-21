@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Administração - JU MAKE</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="container">
+      <h1><i class="fas fa-cog"></i> Painel de Administração</h1>
+      <a href="index.html" class="btn btn-outline"><i class="fas fa-home"></i> Voltar ao Site</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="produtos">Gerenciar Produtos</button>
+      <button class="tab-btn" data-tab="banners">Gerenciar Banners</button>
+    </div>
+
+    <!-- Seção de Produtos -->
+    <section id="produtos" class="admin-section active">
+      <div class="section-header">
+        <h2>Gerenciamento de Produtos</h2>
+        <button id="addProductBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Adicionar Produto</button>
+      </div>
+
+      <div class="admin-card">
+        <div class="card-header">
+          <h3>Lista de Produtos</h3>
+          <div class="search-filter">
+            <input type="text" id="searchProduct" placeholder="Buscar produto...">
+            <select id="categoryFilter">
+              <option value="todos">Todas as categorias</option>
+              <option value="Rosto">Rosto</option>
+              <option value="Olhos">Olhos</option>
+              <option value="Lábios">Lábios</option>
+              <option value="Skincare">Skincare</option>
+              <option value="Acessórios">Acessórios</option>
+              <option value="Kits">Kits</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table id="productTable" class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Imagem</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Categoria</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Produtos serão carregados aqui via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Banners -->
+    <section id="banners" class="admin-section">
+      <div class="section-header">
+        <h2>Gerenciamento de Banners</h2>
+        <button id="addBannerBtn" class="btn btn-primary"><i class="fas fa-plus"></i> Adicionar Banner</button>
+      </div>
+
+      <div class="admin-card">
+        <div class="card-header">
+          <h3>Lista de Banners</h3>
+        </div>
+        <div class="banner-grid" id="bannerGrid">
+          <!-- Banners serão carregados aqui via JavaScript -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Modal para adicionar/editar produto -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="productModalTitle">Adicionar Produto</h3>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="productForm">
+          <input type="hidden" id="productId">
+          
+          <div class="form-group">
+            <label for="productName">Nome do Produto*</label>
+            <input type="text" id="productName" required>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="productPrice">Preço (R$)*</label>
+              <input type="number" id="productPrice" step="0.01" min="0" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="productStock">Estoque*</label>
+              <input type="number" id="productStock" min="0" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="productCategory">Categoria*</label>
+              <select id="productCategory" required>
+                <option value="">Selecione uma categoria</option>
+                <option value="Rosto">Rosto</option>
+                <option value="Olhos">Olhos</option>
+                <option value="Lábios">Lábios</option>
+                <option value="Skincare">Skincare</option>
+                <option value="Acessórios">Acessórios</option>
+                <option value="Kits">Kits</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="productDescription">Descrição</label>
+            <textarea id="productDescription" rows="4"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Imagens do Produto</label>
+            <div class="image-upload-container">
+              <div class="image-preview-container" id="imagePreviewContainer">
+                <!-- Previews de imagens serão adicionados aqui -->
+              </div>
+              <div class="image-upload-btn">
+                <label for="productImages" class="btn btn-outline btn-sm">
+                  <i class="fas fa-upload"></i> Adicionar Imagem
+                </label>
+                <input type="file" id="productImages" accept="image/*" multiple style="display: none;">
+              </div>
+            </div>
+            <small>Você pode adicionar múltiplas imagens. A primeira será a imagem principal.</small>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" id="cancelProductBtn">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar Produto</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar banner -->
+  <div id="bannerModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Adicionar Banner</h3>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="bannerForm">
+          <div class="form-group">
+            <label for="bannerTitle">Título do Banner</label>
+            <input type="text" id="bannerTitle">
+          </div>
+          
+          <div class="form-group">
+            <label>Imagem do Banner*</label>
+            <div class="banner-preview-container">
+              <div id="bannerPreview" class="banner-preview">
+                <i class="fas fa-image"></i>
+                <span>Nenhuma imagem selecionada</span>
+              </div>
+              <div class="image-upload-btn">
+                <label for="bannerImage" class="btn btn-outline btn-sm">
+                  <i class="fas fa-upload"></i> Selecionar Imagem
+                </label>
+                <input type="file" id="bannerImage" accept="image/*" style="display: none;" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" id="cancelBannerBtn">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar Banner</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmação -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content modal-sm">
+      <div class="modal-header">
+        <h3>Confirmação</h3>
+        <span class="close-modal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMessage">Tem certeza que deseja excluir este item?</p>
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="cancelConfirmBtn">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmBtn">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de notificação -->
+  <div id="toast" class="toast">
+    <div class="toast-content">
+      <i id="toastIcon" class="fas fa-check-circle"></i>
+      <div class="toast-message" id="toastMessage">Operação realizada com sucesso!</div>
+    </div>
+    <div class="toast-progress"></div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
