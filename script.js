@@ -265,7 +265,7 @@ let produtos = [
 
 // Banners fixos
 let banners = [
-  { id: 1, titulo: "Banner Principal", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_2.png?raw=true" },
+  { id: 1, titulo: "Banner Principal", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_4.png?raw=true" },
   { id: 2, titulo: "Promoções", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_1.png?raw=true" },
   { id: 3, titulo: "Novidades", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_3.png?raw=true" }
 ];
