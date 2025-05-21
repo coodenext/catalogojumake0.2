@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,23 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
   <!-- Header -->
   <header>
-    <img src="placeholder.svg" alt="JU MAKE" class="logo" onerror="this.src='https://github.com/coodenext/catalogojumake0.2/blob/main/logomarca.png?raw=true'">
+    <img src="placeholder.svg" alt="JU MAKE" class="logo"
+      onerror="this.src='https://github.com/coodenext/catalogojumake0.2/blob/main/logomarca.png?raw=true'">
     <h1>CATÁLOGO DE PRODUTOS</h1>
     <!-- Removido o ícone de engrenagem/link para admin -->
   </header>
 
+  <header>
+    <nav class="menu">
+      <a href="#sobre">Quem Somos</a>
+      <a href="#pagamento">Formas de Pagamento</a>
+      <a href="https://wa.me/5587992437345" target="_blank">Atendimento</a>
+    </nav>
+  </header>
   <!-- Banner rotativo -->
   <div class="banner-rotativo">
     <div class="banner-slides">
@@ -39,7 +49,8 @@
     <button class="category-btn" data-category="Olhos" onclick="filtrarPorCategoria('Olhos')">Olhos</button>
     <button class="category-btn" data-category="Lábios" onclick="filtrarPorCategoria('Lábios')">Lábios</button>
     <button class="category-btn" data-category="Skincare" onclick="filtrarPorCategoria('Skincare')">Skincare</button>
-    <button class="category-btn" data-category="Acessórios" onclick="filtrarPorCategoria('Acessórios')">Acessórios</button>
+    <button class="category-btn" data-category="Acessórios"
+      onclick="filtrarPorCategoria('Acessórios')">Acessórios</button>
     <button class="category-btn" data-category="Kits" onclick="filtrarPorCategoria('Kits')">Kits</button>
   </div>
 
@@ -76,26 +87,40 @@
     </div>
   </div>
 
+  <section id="sobre">
+    <h2>Quem Somos</h2>
+    <p>Somos a JU MAKE, apaixonados por maquiagem, skincare e bem-estar. Trazemos os melhores produtos para realçar sua
+      beleza.</p>
+  </section>
+
+  <section id="pagamento">
+    <h2>Formas de Pagamento</h2>
+    <p>Aceitamos pagamentos via PIX, dinheiro em espécie e cartão de crédito.</p>
+  </section>
+
   <!-- Footer -->
   <footer class="rodape">
     <div class="rodape-conteudo">
-      <img src="placeholder.svg" alt="JU MAKE" class="logo-rodape" onerror="this.src='https://github.com/coodenext/catalogojumake0.2/blob/main/Logo.png?raw=true'">
-        <p class="footer-copy">2025 JU MAKE - Todos os direitos reservados. 
-          <a href="#" class="footer-link">Segurança e privacidade</a>
-        </p>
-      </div>
-      <div class="social-links">
-        <a href="https://www.instagram.com/" target="_blank" class="social-link">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://wa.me/5587992437345" target="_blank" class="social-link">
-          <i class="fab fa-whatsapp"></i>
-        </a>
-      </div>
+      <img src="placeholder.svg" alt="JU MAKE" class="logo-rodape"
+        onerror="this.src='https://github.com/coodenext/catalogojumake0.2/blob/main/Logo.png?raw=true'">
+      <p class="footer-copy">2025 JU MAKE - Todos os direitos reservados.
+        <a href="#" class="footer-link">Segurança e privacidade</a>
+      </p>
+    </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/" target="_blank" class="social-link">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://wa.me/5587992437345" target="_blank" class="social-link">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
     </div>
     <button id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">&#8593;</button>
   </footer>
 
   <script src="script.js"></script>
+
 </body>
+
 </html>

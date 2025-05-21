@@ -22,7 +22,7 @@ header {
 }
 
 .logo {
-  width: 150px;
+  width: 150px; /* Altera o tamanho da logomarca*/
   height: auto;
   margin-bottom: -45px;
   object-fit: contain;
@@ -727,4 +727,89 @@ header h1 {
 
 .mensagem-sem-produtos p {
   color: #888;
+}
+
+/*----------------------------*/
+
+/* Animação Fade-In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.produto {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+/*-----------------------------*/
+
+.menu {
+  margin-top: 10px;
+}
+
+.menu a {
+  margin: 0 10px;
+  color: #d6336c;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.menu a:hover {
+  color: #b52b5c;
+}
+
+/*----------------------------------*/
+
+/* Estilo das seções informativas */
+#sobre, #pagamento, #politica {
+  background-color: white;
+  border-radius: 12px;
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 20px auto; /* Espaço entre os containes  */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 1s ease;
+}
+
+#sobre h2, 
+#pagamento h2, 
+#politica h2 {
+  color: #d6336c;
+  font-size: 28px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#sobre p, 
+#pagamento p, 
+#politica p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Adiciona separação entre as seções */
+#pagamento, #politica {
+  margin-top: 20px;
+}
+#sobre h2::after, 
+#pagamento h2::after, 
+#politica h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #d6336c;
+  margin: 8px auto 0;
+  border-radius: 2px;
 }
