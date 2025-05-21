@@ -265,9 +265,9 @@ let produtos = [
 
 // Banners fixos
 let banners = [
-  { id: 1, titulo: "Banner Principal", imagem: "https://via.placeholder.com/1200x400?text=Banner+Principal" },
-  { id: 2, titulo: "Promoções", imagem: "https://via.placeholder.com/1200x400?text=Promoções" },
-  { id: 3, titulo: "Novidades", imagem: "https://via.placeholder.com/1200x400?text=Novidades" }
+  { id: 1, titulo: "Banner Principal", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_2.png?raw=true" },
+  { id: 2, titulo: "Promoções", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_1.png?raw=true" },
+  { id: 3, titulo: "Novidades", imagem: "https://github.com/coodenext/catalogojumake0.2/blob/main/ban1_3.png?raw=true" }
 ];
 
 // Variáveis globais
