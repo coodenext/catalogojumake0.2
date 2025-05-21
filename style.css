@@ -751,10 +751,13 @@ header h1 {
 
 .menu {
   margin-top: 10px;
+  background-color: #ffe2ec;
+  padding: 10px 0;
+  text-align: center;
 }
 
 .menu a {
-  margin: 0 10px;
+  margin: 0 15px;
   color: #d6336c;
   text-decoration: none;
   font-weight: bold;
@@ -763,6 +766,7 @@ header h1 {
 
 .menu a:hover {
   color: #b52b5c;
+  text-decoration: underline;
 }
 
 /*----------------------------------*/
