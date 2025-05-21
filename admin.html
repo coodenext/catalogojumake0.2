@@ -128,22 +128,6 @@
             <label for="productDescription">Descrição</label>
             <textarea id="productDescription" rows="4"></textarea>
           </div>
-
-          <!-- No seu HTML -->
-           <!-- Campo para colar URL -->
-<div class="form-group">
-  <label for="productImageURL">URL da Imagem</label>
-<textarea id="productImageUrls" rows="3" placeholder="Cole as URLs das imagens, uma por linha"></textarea>
-</div>
-
-<!-- Preview das imagens -->
-<div id="imagePreviewContainer"></div>
-
-<!-- Campo de upload -->
-<input type="file" id="productImages" accept="image/*" multiple style="display: none;">
-
-<!-- Botão opcional para limpar localStorage -->
-<button id="limparLocalStorageBtn">Limpar LocalStorage</button>
           
           <div class="form-group">
             <label>Imagens do Produto</label>
@@ -236,26 +220,5 @@
   </div>
 
   <script src="admin.js"></script>
-
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBeTW9bgaHVS2PZpjEwMSTsABCBum1790Q",
-    authDomain: "catalogojumake.firebaseapp.com",
-    projectId: "catalogojumake",
-    storageBucket: "catalogojumake.firebasestorage.app",
-    messagingSenderId: "665022672285",
-    appId: "1:665022672285:web:e286e10ccc0d73ec331374"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
-
 </body>
 </html>
