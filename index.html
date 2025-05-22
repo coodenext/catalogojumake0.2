@@ -10,6 +10,20 @@
 </head>
 
 <body>
+ <!-- Modal do Carrinho -->
+<div id="modal-carrinho" class="modal-carrinho">
+  <div class="carrinho-overlay" onclick="fecharCarrinho()"></div>
+  <div class="carrinho-conteudo">
+    <span class="fechar-carrinho" onclick="fecharCarrinho()">&times;</span>
+    <h2>Seu Carrinho</h2>
+    <div id="carrinho-itens"></div>
+    <div id="carrinho-total" class="carrinho-total">Total: R$ 0,00</div>
+    <button class="botao-finalizar" onclick="finalizarPedidoWhatsApp()">
+      <i class="fab fa-whatsapp"></i> Finalizar Pedido via WhatsApp
+    </button>
+  </div>
+</div>
+
   <!-- Header -->
   <header>
     <img src="placeholder.svg" alt="JU MAKE" class="logo"
@@ -17,6 +31,10 @@
     <h1>CATÁLOGO DE PRODUTOS</h1>
     <!-- Removido o ícone de engrenagem/link para admin -->
   </header>
+  <div id="carrinho-icon" onclick="abrirCarrinho()">
+    <i class="fas fa-shopping-cart"></i>
+    <span id="carrinho-contador">0</span>
+  </div>
 
   <div class="menu">
     <a href="#sobre">Quem Somos</a>
@@ -121,6 +139,8 @@
   <link rel="stylesheet" href="style.css">
 
   <script src="script.js"></script>
+  <div id="produtos-container"></div>
+
 
 </body>
 

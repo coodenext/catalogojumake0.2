@@ -253,14 +253,14 @@ let produtos = [
     descricao: "Realce seus lábios com um acabamento luxuoso e radiante. Com partículas de brilho dourado, o Gold Magic oferece hidratação, volume e um visual glamouroso que transforma qualquer make. Ideal para quem ama se destacar!"
   },
   {
-  id: 29,
-  nome: "Batom Acabamento Matte (A) Cores Sortidas - Lua & Neve",
-  preco: 11,
-  imagens: ["https://shre.ink/e7y1"],
-  estoque: 0,
-  categoria: "Lábios", // ✅ Corrigido
-  descricao: "Com acabamento aveludado e alta fixação, o Batom Matte Lua & Neve entrega cor intensa, conforto e estilo. Cores sortidas para combinar com todos os momentos."
-}
+    id: 29,
+    nome: "Batom Acabamento Matte (A) Cores Sortidas - Lua & Neve",
+    preco: 11,
+    imagens: ["https://shre.ink/e7y1"],
+    estoque: 0,
+    categoria: "Lábios", // ✅ Corrigido
+    descricao: "Com acabamento aveludado e alta fixação, o Batom Matte Lua & Neve entrega cor intensa, conforto e estilo. Cores sortidas para combinar com todos os momentos."
+  }
 ];
 
 // Banners fixos
@@ -527,16 +527,34 @@ function criarElementoProduto(produto) {
   estoque.textContent = produto.estoque > 0 ? `${produto.estoque} em estoque` : "Indisponível";
   divInfo.appendChild(estoque);
 
-  // Botão de compra
-  const botao = document.createElement("a");
-  botao.className = `comprar-btn ${produto.estoque <= 0 ? "botao-desativado" : ""}`;
-  botao.textContent = produto.estoque <= 0 ? "Indisponível" : "Comprar";
+// Botão de compra
+const botao = document.createElement("button");
+botao.className = `comprar-btn ${produto.estoque <= 0 ? "botao-desativado" : ""}`;
+botao.textContent = produto.estoque <= 0 ? "Indisponível" : "Adicionar ao Carrinho";
+botao.disabled = produto.estoque <= 0;
+
+botao.onclick = (e) => {
+  e.stopPropagation();
+  if (produto.estoque > 0) {
+    adicionarAoCarrinho(produto.id);
+  }
+};
+
+  botao.onclick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (produto.estoque > 0) {
+      adicionarAoCarrinho(produto.id);
+      abrirCarrinho(); // Abre o modal do carrinho para o usuário ver os itens adicionados
+    }
+  };
 
   if (produto.estoque <= 0) {
     botao.onclick = (e) => {
       e.stopPropagation();
       e.preventDefault();
     };
+
   } else {
     botao.href = `https://wa.me/5587992437345?text=${encodeURIComponent(`Olá, tenho interesse neste produto!\n\nNome: ${produto.nome}\nValor: R$ ${produto.preco.toFixed(2)}`)}`;
     botao.target = "_blank";
@@ -740,3 +758,210 @@ function voltarAoTopo() {
     behavior: "smooth"
   });
 }
+
+// ----------------------------------------------- //
+
+// === Carrinho de Compras ===
+let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+// Função para adicionar produto ao carrinho
+function adicionarAoCarrinho(produtoId) {
+  const produto = produtos.find(p => p.id === produtoId);
+  if (!produto || produto.estoque <= 0) return;
+
+  const existente = carrinho.find(item => item.id === produtoId);
+  if (existente) {
+    existente.qtd++;
+  } else {
+    carrinho.push({
+      id: produto.id,
+      nome: produto.nome,
+      preco: produto.preco,
+      imagem: produto.imagens[0],
+      qtd: 1
+    });
+  }
+
+  localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  atualizarCarrinho();
+
+  // Feedback visual
+  alert(`${produto.nome} adicionado ao carrinho!`);
+}
+
+// Função para atualizar o contador e conteúdo do carrinho
+function atualizarCarrinho() {
+  // Atualizar contador
+  const contador = document.getElementById('carrinho-contador');
+  if (contador) {
+    const totalItens = carrinho.reduce((total, item) => total + item.qtd, 0);
+    contador.textContent = totalItens;
+  }
+
+  // Atualizar lista de itens se o modal estiver aberto
+  const lista = document.getElementById('carrinho-itens');
+  const totalElement = document.getElementById('carrinho-total');
+
+  if (lista) {
+    // Limpar lista
+    lista.innerHTML = '';
+
+    if (carrinho.length === 0) {
+      lista.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio</p>';
+      if (totalElement) totalElement.textContent = 'Total: R$ 0,00';
+      return;
+    }
+
+    // Adicionar itens
+    let valorTotal = 0;
+
+    carrinho.forEach((item, index) => {
+      const subtotal = item.preco * item.qtd;
+      valorTotal += subtotal;
+
+      const itemElement = document.createElement('div');
+      itemElement.className = 'item-carrinho';
+      itemElement.innerHTML = `
+        <img src="${item.imagem}" alt="${item.nome}" onerror="this.src='https://via.placeholder.com/60x60?text=Produto'">
+        <div class="item-info">
+          <h4>${item.nome}</h4>
+          <p>R$ ${item.preco.toFixed(2)} x ${item.qtd}</p>
+          <p class="item-subtotal">R$ ${subtotal.toFixed(2)}</p>
+          <div class="item-controles">
+            <button onclick="alterarQuantidade(${item.id}, -1)">-</button>
+            <span>${item.qtd}</span>
+            <button onclick="alterarQuantidade(${item.id}, 1)">+</button>
+            <button class="remover-item" onclick="removerDoCarrinho(${index})">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+      lista.appendChild(itemElement);
+    });
+
+    // Atualizar total
+    if (totalElement) totalElement.textContent = `Total: R$ ${valorTotal.toFixed(2)}`;
+  }
+}
+
+// Função para alterar quantidade de um item
+function alterarQuantidade(produtoId, delta) {
+  const item = carrinho.find(item => item.id === produtoId);
+  if (!item) return;
+
+  item.qtd += delta;
+
+  if (item.qtd <= 0) {
+    // Remover item se quantidade for zero ou negativa
+    carrinho = carrinho.filter(item => item.id !== produtoId);
+  }
+
+  localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  atualizarCarrinho();
+}
+
+// Função para remover item do carrinho
+function removerDoCarrinho(index) {
+  if (index >= 0 && index < carrinho.length) {
+    carrinho.splice(index, 1);
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    atualizarCarrinho();
+  }
+}
+
+// Função para abrir o modal do carrinho
+function abrirCarrinho() {
+  const modal = document.getElementById('modal-carrinho');
+  if (modal) {
+    modal.style.display = 'block';
+    atualizarCarrinho(); // Atualiza o conteúdo do carrinho
+  }
+}
+
+// Função para fechar o modal do carrinho
+function fecharCarrinho() {
+  const modal = document.getElementById('modal-carrinho');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+}
+
+// Função para finalizar o pedido via WhatsApp
+function finalizarPedidoWhatsApp() {
+  if (carrinho.length === 0) {
+    alert('Seu carrinho está vazio!');
+    return;
+  }
+
+  let mensagem = "Olá! Gostaria de fazer um pedido:\n\n";
+  let valorTotal = 0;
+
+  carrinho.forEach(item => {
+    const subtotal = item.preco * item.qtd;
+    valorTotal += subtotal;
+    mensagem += `• ${item.nome}\n`;
+    mensagem += `  ${item.qtd} x R$ ${item.preco.toFixed(2)} = R$ ${subtotal.toFixed(2)}\n\n`;
+  });
+
+  mensagem += `\n*TOTAL: R$ ${valorTotal.toFixed(2)}*`;
+
+  // Codificar a mensagem para URL
+  const mensagemCodificada = encodeURIComponent(mensagem);
+
+  // Abrir WhatsApp com a mensagem
+  window.open(`https://wa.me/5587992437345?text=${mensagemCodificada}`, '_blank');
+}
+
+// Inicializar o carrinho quando a página carregar
+document.addEventListener('DOMContentLoaded', function () {
+  // Inicializar o carrinho
+  atualizarCarrinho();
+
+  // Adicionar evento para fechar o carrinho com ESC
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      fecharCarrinho();
+    }
+  });
+});
+
+// ... outras funções como adicionarAoCarrinho, atualizarCarrinho etc.
+
+function exibirProdutos(lista) {
+  const container = document.getElementById("produtos-container"); // certifique-se de que esse ID existe no HTML
+  container.innerHTML = "";
+
+  lista.forEach(produto => {
+    const card = document.createElement("div");
+    card.className = "card-produto";
+
+    const imagem = document.createElement("img");
+    imagem.src = produto.imagens[0];
+    imagem.alt = produto.nome;
+
+    const nome = document.createElement("h3");
+    nome.textContent = produto.nome;
+
+    const preco = document.createElement("p");
+    preco.textContent = `R$ ${produto.preco.toFixed(2)}`;
+
+    botao.onclick = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (produto.estoque > 0) {
+        adicionarAoCarrinho(produto.id);
+        abrirCarrinho();
+      }
+    };
+
+    card.appendChild(imagem);
+    card.appendChild(nome);
+    card.appendChild(preco);
+    card.appendChild(botao);
+
+    container.appendChild(card);
+  });
+}
+exibirProdutos(produtos);
